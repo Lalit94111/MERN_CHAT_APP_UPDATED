@@ -1,10 +1,10 @@
 const express = require('express');
 const app = express();
-const userRoutes = require('../routes/userRoutes')
-const roomRoutes = require('../routes/roomRoutes')
-const User = require('../models/User');
-const Message = require('../models/Message  ')
-const Room = require('../models/Room')
+const userRoutes = require('./routes/userRoutes')
+const roomRoutes = require('./routes/roomRoutes')
+const User = require('./models/User');
+const Message = require('./models/Message')
+const Room = require('./models/Room')
 const rooms = ['General', 'Programming', 'Core', 'Fun', 'Sports'];
 const cors = require('cors');
 // const path = require('path');
@@ -18,7 +18,7 @@ app.use(cors());
 
 app.use('/users', userRoutes)
 app.use('/room', roomRoutes)
-require('../connection')
+require('./connection')
 
 
 const server = require('http').createServer(app);
