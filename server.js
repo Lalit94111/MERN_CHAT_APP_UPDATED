@@ -1,12 +1,15 @@
 const express = require('express');
 const app = express();
 const userRoutes = require('./routes/userRoutes')
+const roomRoutes = require('./routes/roomRoutes')
 const User = require('./models/User');
 const Message = require('./models/Message')
+const Room = require('./models/Room')
 const rooms = ['General', 'Programming', 'Core', 'Fun', 'Sports'];
 const cors = require('cors');
-const path = require('path');
+// const path = require('path');
 require('dotenv').config();
+const mongoose = require('mongoose')
 
 
 app.use(express.urlencoded({ extended: true }));
@@ -14,6 +17,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use('/users', userRoutes)
+app.use('/room', roomRoutes)
 require('./connection')
 
 
@@ -21,8 +25,8 @@ const server = require('http').createServer(app);
 const PORT = process.env.PORT;
 const io = require('socket.io')(server, {
   cors: {
-    // origin: 'http://localhost:3000',
-    origin: "https://mernchitchatf.herokuapp.com",
+    origin: 'http://localhost:3000',
+    // origin: "https://mernchitchatf.herokuapp.com",
     methods: ['GET', 'POST']
   }
 })
@@ -33,6 +37,9 @@ async function getLastMessagesFromRoom(room) {
     { $match: { to: room } },
     { $group: { _id: '$date', messagesByDate: { $push: '$$ROOT' } } }
   ])
+
+  await Message.populate(roomMessages, { path: 'messagesByDate.from', model: 'User' })
+  // console.log(roomMessages)
   return roomMessages;
 }
 
@@ -52,6 +59,12 @@ function sortRoomMessagesByDate(messages) {
 
 io.on('connection', (socket) => {
 
+  socket.on('new room', async () => {
+    const rooms = await Room.find()
+    // const data = {'rooms':rooms}
+    io.emit('new room', rooms)
+  })
+
   socket.on('new-user', async () => {
     const members = await User.find();
     io.emit('new-user', members)
@@ -67,7 +80,8 @@ io.on('connection', (socket) => {
 
   socket.on('message-room', async (room, content, sender, time, date) => {
     // console.log(content);
-    const newMessage = await Message.create({ content, from: sender, time, date, to: room });
+    // console.log(room)
+    const newMessage = await Message.create({ content, from: mongoose.Types.ObjectId(sender), time, date, to: room });
     let roomMessages = await getLastMessagesFromRoom(room);
     roomMessages = sortRoomMessagesByDate(roomMessages);
     // sending message to room
@@ -84,6 +98,7 @@ io.on('connection', (socket) => {
       await user.save();
       const members = await User.find();
       socket.broadcast.emit('new-user', members);
+      console.log(user)
       res.status(200).send();
     } catch (e) {
       console.log(e);
