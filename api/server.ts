@@ -3,7 +3,7 @@ const app = express();
 const userRoutes = require('../routes/userRoutes')
 const roomRoutes = require('../routes/roomRoutes')
 const User = require('../models/User');
-const Message = require('../models/Message')
+const Message = require('../models/Message  ')
 const Room = require('../models/Room')
 const rooms = ['General', 'Programming', 'Core', 'Fun', 'Sports'];
 const cors = require('cors');
@@ -118,3 +118,5 @@ app.get('/rooms', (req, res) => {
 server.listen(3000, () => {
   console.log('listening to port', 3000)
 })
+
+module.exports = server
