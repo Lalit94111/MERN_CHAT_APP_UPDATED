@@ -115,8 +115,8 @@ app.get('/rooms', (req, res) => {
 })
 
 
-server.listen(3000, () => {
-  console.log('listening to port', 3000)
+server.listen(4000, () => {
+  console.log('listening to port', 4000)
 })
 
 module.exports = server
