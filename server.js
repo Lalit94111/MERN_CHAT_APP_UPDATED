@@ -115,6 +115,6 @@ app.get('/rooms', (req, res) => {
 })
 
 
-server.listen(PORT, () => {
-  console.log('listening to port', PORT)
+server.listen(PORT || 3000, () => {
+  console.log('listening to port', PORT || 3000)
 })
