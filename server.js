@@ -25,7 +25,8 @@ const server = require('http').createServer(app);
 const PORT = process.env.PORT;
 const io = require('socket.io')(server, {
   cors: {
-    origin: 'http://localhost:3000',
+    origin: process.env.CLIENT_URL,
+    // origin: 'http://localhost:3000',
     // origin: "https://mernchitchatf.herokuapp.com",
     methods: ['GET', 'POST']
   }
