@@ -7,7 +7,6 @@ const Message = require('./models/Message')
 const Room = require('./models/Room')
 const rooms = ['General', 'Programming', 'Core', 'Fun', 'Sports'];
 const cors = require('cors');
-// const path = require('path');
 require('dotenv').config();
 const mongoose = require('mongoose')
 
