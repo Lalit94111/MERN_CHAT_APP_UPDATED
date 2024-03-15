@@ -113,6 +113,10 @@ app.get('/rooms', (req, res) => {
   res.json(rooms)
 })
 
+app.get('/', (req, res) => {
+  res.send("Hello!!,How are you?")
+})
+
 
 server.listen(PORT, () => {
   console.log('listening to port', PORT)
