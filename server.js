@@ -13,7 +13,9 @@ const mongoose = require('mongoose')
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: "https://mern-chat-app-frontend-alpha.vercel.app"
+}));
 
 app.use('/users', userRoutes)
 app.use('/room', roomRoutes)
@@ -30,10 +32,6 @@ const io = require('socket.io')(server, {
     methods: ['GET', 'POST']
   }
 })
-
-app.use(cors({
-  origin: "https://mern-chat-app-frontend-alpha.vercel.app"
-}));
 
 
 async function getLastMessagesFromRoom(room) {
