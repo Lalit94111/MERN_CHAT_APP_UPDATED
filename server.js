@@ -14,7 +14,7 @@ const mongoose = require('mongoose')
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors({
-  origin: 'https://mern-chat-app-frontend-alpha.vercel.app',
+  origin: 'https://mern-chat-app-frontend-alpha.vercel.app/',
   methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'PATCH', 'DELETE'],
   allowedHeaders: ['X-Requested-With', 'Content-Type'],
   credentials: true
@@ -31,7 +31,7 @@ const io = require('socket.io')(server, {
   cors: {
     // origin: process.env.CLIENT_URL,
     // origin: 'http://localhost:3000',
-    origin: "https://mern-chat-app-frontend-alpha.vercel.app",
+    origin: "https://mern-chat-app-frontend-alpha.vercel.app/",
     methods: ['GET', 'POST']
   }
 })
