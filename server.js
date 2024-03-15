@@ -26,10 +26,14 @@ const io = require('socket.io')(server, {
   cors: {
     // origin: process.env.CLIENT_URL,
     // origin: 'http://localhost:3000',
-    origin: "*",
+    origin: "https://mern-chat-app-frontend-alpha.vercel.app",
     methods: ['GET', 'POST']
   }
 })
+
+app.use(cors({
+  origin: "https://mern-chat-app-frontend-alpha.vercel.app"
+}));
 
 
 async function getLastMessagesFromRoom(room) {
