@@ -117,9 +117,10 @@ app.get('/', (req, res) => {
   res.send("Hello!!,How are you?")
 })
 
+if (!server.listening) {
+  server.listen(PORT, () => {
+    console.log('listening to port', PORT)
+  })
+}
 
-server.listen(PORT, () => {
-  console.log('listening to port', PORT)
-})
 
-module.exports = server
