@@ -26,7 +26,7 @@ const io = require('socket.io')(server, {
   cors: {
     // origin: process.env.CLIENT_URL,
     // origin: 'http://localhost:3000',
-    origin: "https://mern-chat-app-frontend-alpha.vercel.app/",
+    origin: "https://mern-chat-app-frontend-alpha.vercel.app",
     methods: ['GET', 'POST']
   }
 })
